@@ -1,25 +1,27 @@
-import { distinctUntilChanged, from, of } from "rxjs";
+import { debounceTime, distinctUntilChanged, fromEvent, pluck } from "rxjs";
 
-const obs$ = of(1,2,3,4,4,3,2,1);
-const Personajes = [
-    { nombre: 'nombre1' },
-    { nombre: 'nombre1' },
-    { nombre: 'nombre2' },
-    { nombre: 'nombre3' },
-    { nombre: 'nombre4' },
-    { nombre: 'nombre4' },
-    { nombre: 'nombre3' }
-]
-const obs2$ = from(Personajes)
-
+const obs$ = fromEvent(document, 'click')
 /*
 obs$.pipe(
-    distinctUntilChanged() //Imprime solo una vez el 4
-).subscribe({
-    next: console.log
+    //Imprimirá evento click dos segundos despues de ser emitido, si dentro de ese lapso se clickea mas de una vez, solo se imprimira el ultimo click dado
+    debounceTime(2000)
+)
+.subscribe({
+    next: clickInfo => console.log(clickInfo)
 })
 */
 
-obs2$.pipe(
-    distinctUntilChanged((prev, curr) => prev.nombre !== curr.nombre)
-).subscribe({next: res => console.log(res)})
+//Practica
+const input = document.createElement('input');
+document.querySelector('body').append(input)
+
+const inputObs$ = fromEvent<KeyboardEvent>(input, 'keyup')
+
+inputObs$.pipe(
+    pluck('target', 'value'),
+    debounceTime(500),
+    distinctUntilChanged()
+)
+.subscribe({
+    next: res => console.log(res)
+})
