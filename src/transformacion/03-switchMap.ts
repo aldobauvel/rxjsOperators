@@ -1,6 +1,6 @@
 import { Observable, debounceTime, fromEvent, map, mergeAll, pluck, switchMap } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { GitHubResponse, GitHubUser } from './interface/GitHubResponse.interface';
+import { GitHubResponse, GitHubUser } from '../interface/GitHubResponse.interface';
 
 //Referencias
 const body = document.querySelector('body');
@@ -25,13 +25,16 @@ input$.pipe(
 //.subscribe( console.log)
 
 //usando switchMap
+//usando switchMap
+//usando switchMap
+
 const url = 'https://httpbin.org/delay/1?arg?=';
 
 input$.pipe(
     //pluck('target','value'),
     map<KeyboardEvent, string>( res => res.target['value']),
     switchMap( texto => {
-        return ajax.getJSON(url + texto)
+        return ajax.getJSON(url + texto) // al recibir valor de input cancela y emite nuevo observable
     })
 )
 .subscribe(console.log)

@@ -1,6 +1,6 @@
-import { Observable, debounceTime, fromEvent, map, mergeAll, pluck, switchMap } from 'rxjs';
+import { Observable, debounceTime, fromEvent, map, mergeAll, pluck } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { GitHubResponse, GitHubUser } from './interface/GitHubResponse.interface';
+import { GitHubResponse, GitHubUser } from '../interface/GitHubResponse.interface';
 
 //Referencias
 const body = document.querySelector('body');
@@ -21,19 +21,5 @@ input$.pipe(
     mergeAll(),
     //pluck('items'),
     map<GitHubResponse, GitHubUser[]>(res => res.items)
-)
-//.subscribe( console.log)
-
-//usando switchMap
-const url = 'https://httpbin.org/delay/1?arg?=';
-
-input$.pipe(
-    //pluck('target','value'),
-    map<KeyboardEvent, string>( res => res.target['value']),
-    switchMap( texto => {
-        return ajax.getJSON(url + texto)
-    })
-)
-.subscribe(console.log)
-
+).subscribe( console.log)
 
