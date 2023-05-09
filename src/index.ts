@@ -1,13 +1,36 @@
-import { forkJoin, interval, of, take } from "rxjs";
+/**
+ * Ejercicio: 
+ * El objetivo de es realizar la misma impresión, pero usando observables
+ * Nota: NO hay que usar el ciclo "FOR OF", usar un observable y llamar la función capitalizar
+ */
 
-const numeros$ = of (1,2,3,4)
-const intervalo$ = interval(1000).pipe(take(3)) // 0 1 2
-const letras$ = of('a','b','c')
+/**
+ * Salida esperada:
+ * Batman
+ * Joker
+ * Doble Cara
+ * Pingüino
+ * Hiedra Venenosa
+ */
+(() =>{
 
-// los observables deben ser finitos
-forkJoin(
-    numeros$,
-    intervalo$,
-    letras$
-).subscribe(console.log)
-//output: [4,2,'c']
+
+    const nombres = ['batman', 'joker', 'doble cara', 'pingüino', 'hiedra venenosa'];
+  
+    const capitalizar = (nombre: string) => nombre.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+  
+  
+    // Cambiar este FOR OF, por un observable y capitalizar las emisiones
+    for( let nombre of nombres ) {
+      console.log( capitalizar(nombre) )
+    }
+  
+  
+  
+  
+  
+  
+  
+  })();
+  
+  
